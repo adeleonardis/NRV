@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="src\NRV.h" />
+    <ClInclude Include="src\NRV\NRVCore.h" />
+    <ClInclude Include="src\NRV\Application.h" />
+    <ClInclude Include="src\NRV\EntryPoint.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\NRV\Application.cpp" />
+  </ItemGroup>
+</Project>
