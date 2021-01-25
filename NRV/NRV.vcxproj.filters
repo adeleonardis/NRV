@@ -5,8 +5,10 @@
     <ClInclude Include="src\NRV\NRVCore.h" />
     <ClInclude Include="src\NRV\Application.h" />
     <ClInclude Include="src\NRV\EntryPoint.h" />
+    <ClInclude Include="src\NRV\ThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NRV\Application.cpp" />
+    <ClCompile Include="src\NRV\ThreadPool.cpp" />
   </ItemGroup>
 </Project>
