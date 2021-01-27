@@ -1,7 +1,7 @@
 # NRV
 GAME ENGINE
 
-Following the tutorial series by The Cherno
+This project was initially following the tutorial series by The Cherno, however, I have decided I would rather make it my own and do everything myself.
 
 (https://www.youtube.com/playlist?list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT)
 
