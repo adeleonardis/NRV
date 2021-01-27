@@ -2,9 +2,10 @@
 
 #include "NRVCore.h"
 
+#include "ThreadSafe/ThreadSafeQueue.h"
+#include "ThreadSafe/ThreadList.h"
 #include <queue>
 #include <functional>
-#include <vector>
 #include <thread>
 #include <mutex>
 
@@ -42,16 +43,25 @@ namespace NRV {
 	{
 	private:
 		bool m_IsDone;
-		std::thread m_TaskProcessingThread;
-		std::mutex m_PoolAccess;
-		std::vector<std::thread> m_Pool;
-		ThreadSafeQueue<std::function<void()>> m_Tasks;
+
+		std::thread m_NewTaskThread;
+		std::thread m_EndTaskThread;
+
+		ThreadSafe::Queue<std::function<void()>> m_Tasks;
+		ThreadSafe::ThreadList m_ThreadPool;
+		ThreadSafe::Queue<ThreadSafe::ThreadNode*> m_FinishedThreads;
 	public:
 		ThreadPool();
 		~ThreadPool();
+
 		void PushTask(std::function<void()> task);
-		void TaskLoop();
+
+		void NewTaskLoop();
+		void EndTaskLoop();
+
 		void EndPool();
+
+	
 	};
 
 }

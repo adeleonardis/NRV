@@ -6,9 +6,12 @@
     <ClInclude Include="src\NRV\Application.h" />
     <ClInclude Include="src\NRV\EntryPoint.h" />
     <ClInclude Include="src\NRV\ThreadPool.h" />
+    <ClInclude Include="src\NRV\ThreadSafe\ThreadSafeQueue.h" />
+    <ClInclude Include="src\NRV\ThreadSafe\ThreadList.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NRV\Application.cpp" />
     <ClCompile Include="src\NRV\ThreadPool.cpp" />
+    <ClCompile Include="src\NRV\ThreadSafe\ThreadList.cpp" />
   </ItemGroup>
 </Project>

@@ -1,26 +1,58 @@
 #include "ThreadPool.h"
+#include <iostream>
+#include <chrono>
+
+using namespace std::chrono_literals;
 
 namespace NRV {
-
 	ThreadPool::ThreadPool()
-		: m_IsDone(false)
-	{
-		m_TaskProcessingThread = std::thread(&ThreadPool::TaskLoop, this);
-	}
+		: m_IsDone(false), m_NewTaskThread(&ThreadPool::NewTaskLoop, this), m_EndTaskThread(&ThreadPool::EndTaskLoop, this) {}
 
 	ThreadPool::~ThreadPool()
 	{
-		m_IsDone = true;
+		// Nodes should be deleted with the thread list Clear() function.
 	}
 
-	void ThreadPool::TaskLoop()
+	void ThreadPool::PushTask(std::function<void()> task)
+	{
+		m_Tasks.Append(task);
+	}
+
+	void ThreadPool::NewTaskLoop()
 	{
 		while (!m_IsDone)
 		{
-			std::function<void()> task;
-			if (m_Tasks.TryPop(task))
+			if (!m_Tasks.IsEmpty())
 			{
-				PushTask(task);
+				std::function<void()>* current_task = new std::function<void()>(m_Tasks.Top());
+				m_Tasks.Pop();
+
+				ThreadSafe::ThreadNode* new_node = new ThreadSafe::ThreadNode();
+				new_node->m_Thread = new std::thread([&](std::function<void()> *task, ThreadSafe::ThreadNode *node) {
+
+					m_ThreadPool.Append(node);
+
+					(*task)();
+					delete task;
+
+					while (!node);
+
+					m_FinishedThreads.Append(node);
+				}, current_task, new_node);
+			}
+		}
+
+		//m_ThreadPool.Print();
+	}
+
+	void ThreadPool::EndTaskLoop()
+	{
+		while (!m_IsDone)
+		{
+			if (!m_FinishedThreads.IsEmpty())
+			{
+				auto ended_task = m_FinishedThreads.Pull();
+				m_ThreadPool.Remove(ended_task);
 			}
 		}
 	}
@@ -28,16 +60,15 @@ namespace NRV {
 	void ThreadPool::EndPool()
 	{
 		m_IsDone = true;
-		m_TaskProcessingThread.join();
-		int size = m_Pool.size();
-		for (int i = 0; i < size; i++)
-			m_Pool[i].join();
-	}
 
-	void ThreadPool::PushTask(std::function<void()> task)
-	{
-		std::lock_guard<std::mutex> lock(m_PoolAccess);
-		m_Pool.push_back(std::thread(task));
+		std::cout << "Ending the pool...\n";
+		m_NewTaskThread.join();
+		std::cout << "Successfully joined the new task thread\n";
+		m_EndTaskThread.join();
+		std::cout << "Successfully joined the end task thread\n";
+
+		m_ThreadPool.Clear();
+		std::cout << "Successfully joined cleared the thread pool\n";
 	}
 
 }

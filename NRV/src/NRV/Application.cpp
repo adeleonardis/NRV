@@ -3,7 +3,10 @@
 #include <iostream>
 #include <thread>
 
-static void tempfunction(const bool* IsRunning) { while (*IsRunning) std::cout << std::this_thread::get_id() << '\n'; }
+static void tempfunction(const bool* IsRunning) {
+	std::cout << "Thread ID: " << std::this_thread::get_id() << '\n';
+	while (*IsRunning);
+}
 
 namespace NRV {
 	Application::Application()
@@ -16,9 +19,9 @@ namespace NRV {
 	void Application::Run()
 	{
 		// Push tasks, i.e. threads for while loops
-		m_Processes.PushTask([=]() { tempfunction(&m_IsRunning); });
-		m_Processes.PushTask([=]() { tempfunction(&m_IsRunning); });
-		m_Processes.PushTask([=]() { tempfunction(&m_IsRunning); });
+		m_Processes.PushTask([&]() { tempfunction(&m_IsRunning); });
+		m_Processes.PushTask([&]() { tempfunction(&m_IsRunning); });
+		m_Processes.PushTask([&]() { tempfunction(&m_IsRunning); });
 
 		//while (true);
 		std::cin.get();

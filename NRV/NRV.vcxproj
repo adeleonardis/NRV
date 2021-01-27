@@ -86,10 +86,13 @@
     <ClInclude Include="src\NRV\EntryPoint.h" />
     <ClInclude Include="src\NRV\NRVCore.h" />
     <ClInclude Include="src\NRV\ThreadPool.h" />
+    <ClInclude Include="src\NRV\ThreadSafe\ThreadList.h" />
+    <ClInclude Include="src\NRV\ThreadSafe\ThreadSafeQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NRV\Application.cpp" />
     <ClCompile Include="src\NRV\ThreadPool.cpp" />
+    <ClCompile Include="src\NRV\ThreadSafe\ThreadList.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
