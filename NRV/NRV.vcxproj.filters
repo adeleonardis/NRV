@@ -5,13 +5,17 @@
     <ClInclude Include="src\NRV\NRVCore.h" />
     <ClInclude Include="src\NRV\Application.h" />
     <ClInclude Include="src\NRV\EntryPoint.h" />
-    <ClInclude Include="src\NRV\ThreadPool.h" />
-    <ClInclude Include="src\NRV\ThreadSafe\ThreadSafeQueue.h" />
-    <ClInclude Include="src\NRV\ThreadSafe\ThreadList.h" />
+    <ClInclude Include="src\Graphics\RenderingHardwareInterface.h" />
+    <ClInclude Include="src\Graphics\OpenGL\VertexBuffer.h" />
+    <ClInclude Include="src\Graphics\OpenGL\OpenGL_RHI.h" />
+    <ClInclude Include="src\NRV\StaticThreadPool.h" />
+    <ClInclude Include="src\NRV\Log.h" />
+    <ClInclude Include="src\NRV\LogWrapper.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\NRV\Application.cpp" />
-    <ClCompile Include="src\NRV\ThreadPool.cpp" />
-    <ClCompile Include="src\NRV\ThreadSafe\ThreadList.cpp" />
+    <ClCompile Include="src\Graphics\OpenGL\OpenGL_RHI.cpp" />
+    <ClCompile Include="src\NRV\StaticThreadPool.cpp" />
+    <ClCompile Include="src\NRV\Log.cpp" />
   </ItemGroup>
 </Project>

@@ -56,12 +56,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NRV_PLATFORM_WINDOWS;NRV_EXPORT_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NRV_PLATFORM_WINDOWS;NRV_EXPORT_DLL;GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>src\;vendor\;$(SolutionDir)$(ProjectName)\dep\glfw\include\;$(SolutionDir)$(ProjectName)\dep\glew\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\dep\glfw\lib-vc2019\;$(SolutionDir)$(ProjectName)\dep\glew\lib\Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -70,29 +73,36 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NRV_PLATFORM_WINDOWS;NRV_EXPORT_DLL</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NRV_PLATFORM_WINDOWS;NRV_EXPORT_DLL;GLEW_STATIC</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>src\;vendor\;$(SolutionDir)$(ProjectName)\dep\glfw\include\;$(SolutionDir)$(ProjectName)\dep\glew\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(ProjectName)\dep\glfw\lib-vc2019\;$(SolutionDir)$(ProjectName)\dep\glew\lib\Release\x64\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;User32.lib;Gdi32.lib;Shell32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Graphics\OpenGL\OpenGL_RHI.h" />
+    <ClInclude Include="src\Graphics\OpenGL\VertexBuffer.h" />
+    <ClInclude Include="src\Graphics\RenderingHardwareInterface.h" />
     <ClInclude Include="src\NRV.h" />
     <ClInclude Include="src\NRV\Application.h" />
     <ClInclude Include="src\NRV\EntryPoint.h" />
+    <ClInclude Include="src\NRV\Log.h" />
+    <ClInclude Include="src\NRV\LogWrapper.h" />
     <ClInclude Include="src\NRV\NRVCore.h" />
-    <ClInclude Include="src\NRV\ThreadPool.h" />
-    <ClInclude Include="src\NRV\ThreadSafe\ThreadList.h" />
-    <ClInclude Include="src\NRV\ThreadSafe\ThreadSafeQueue.h" />
+    <ClInclude Include="src\NRV\StaticThreadPool.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Graphics\OpenGL\OpenGL_RHI.cpp" />
     <ClCompile Include="src\NRV\Application.cpp" />
-    <ClCompile Include="src\NRV\ThreadPool.cpp" />
-    <ClCompile Include="src\NRV\ThreadSafe\ThreadList.cpp" />
+    <ClCompile Include="src\NRV\Log.cpp" />
+    <ClCompile Include="src\NRV\StaticThreadPool.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

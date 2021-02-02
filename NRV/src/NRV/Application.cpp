@@ -3,6 +3,10 @@
 #include <iostream>
 #include <thread>
 
+#include "LogWrapper.h"
+
+#include "Graphics/OpenGL/OpenGL_RHI.h";
+
 static void tempfunction(const bool* IsRunning) {
 	std::cout << "Thread ID: " << std::this_thread::get_id() << '\n';
 	while (*IsRunning);
@@ -10,18 +14,24 @@ static void tempfunction(const bool* IsRunning) {
 
 namespace NRV {
 	Application::Application()
-		: m_IsRunning(true) {}
+		: m_RHI(nullptr), m_IsRunning(true)
+	{
+		m_Processes.InitThreadPool(3);
+		m_RHI = new Graphics::OpenGL();
+	}
 
 	Application::~Application()
 	{
+		delete m_RHI;
 	}
 
 	void Application::Run()
 	{
+		m_Processes.Run();
 		// Push tasks, i.e. threads for while loops
-		m_Processes.PushTask([&]() { tempfunction(&m_IsRunning); });
-		m_Processes.PushTask([&]() { tempfunction(&m_IsRunning); });
-		m_Processes.PushTask([&]() { tempfunction(&m_IsRunning); });
+		m_Processes.AppendTask([&]() { tempfunction(&m_IsRunning); });
+		m_Processes.AppendTask([&]() { tempfunction(&m_IsRunning); });
+		m_Processes.AppendTask([&]() { tempfunction(&m_IsRunning); });
 
 		//while (true);
 		std::cin.get();

@@ -2,14 +2,17 @@
 
 #include "NRVCore.h"
 
-#include "ThreadPool.h"
+#include "StaticThreadPool.h"
+
+#include "Graphics/RenderingHardwareInterface.h";
 
 namespace NRV {
 
 	class NRV_API Application
 	{
 	private:
-		ThreadPool m_Processes;
+		StaticThreadPool m_Processes;
+		Graphics::RenderingHardwareInterface* m_RHI;
 		bool m_IsRunning;
 	public:
 		Application();
